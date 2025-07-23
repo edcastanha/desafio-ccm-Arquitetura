@@ -6,8 +6,11 @@ Este documento detalha os fluxos de dados para as principais integrações do si
 
 Este fluxo descreve como um novo lead capturado no Zoho CRM da montadora é automaticamente distribuído para o CRM de uma concessionária.
 
-**Diagrama de Sequência de Alto Nível:**
-*(Nota: O diagrama será adicionado em `/diagramas/fluxo-distribuicao-leads.puml` posteriormente)*
+**Diagrama de Referência:**
+*[`/diagramas/sequencial/fluxo-distribuicao-leads.puml`](./../diagramas/sequencial/fluxo-distribuicao-leads.puml)*
+
+![Diagrama de Fluxo de Distribuição de Leads](./../diagramas/assets/sequenciais/fluxo_distribuicao_leads.png)
+
 
 **Passos do Fluxo:**
 
