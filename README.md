@@ -1,8 +1,12 @@
 # Projeto POC de Arquitetura de Sistema e Solução
 
 Data Inicial: 22/07/2025 18:17hs
+Autor: Edson Lourenço BEzerra Filho
+Eusebio - CE
+- - - - - - - - - - - - - - - - 
 
----
+Este projeto foi baseado e orientado por C4 Model e Diagramas de sequencia utilizando PlantUML e utilizando como base de apoio o repo: https://github.com/plantuml-stdlib/C4-PlantUML/blob/master/README.md
+
 
 ## Detalhamento das Pastas
 
