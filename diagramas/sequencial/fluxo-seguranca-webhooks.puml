@@ -1,5 +1,5 @@
 @startuml
-!theme plain
+!theme aws-orange
 title "Fluxo de Segurança: Autenticação de Webhooks"
 
 box "Sistemas Externos" #LightGray
