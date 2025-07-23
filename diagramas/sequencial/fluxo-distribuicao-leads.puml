@@ -1,0 +1,47 @@
+@startuml
+' !theme vibrant
+title Fluxo de Distribuição de Leads (Montadora -> Concessionária)
+
+box "Zoho CRM (Montadora)" #LightBlue
+    participant "Motor de Regras" as crm_rules
+end box
+
+participant "API Gateway" as gateway
+participant "Função de Ingestão\n(Serverless)" as ingestion_fn
+queue "Broker de Mensagens" as broker
+participant "Serviço de Roteamento" as routing_svc
+database "Banco de Dados\n(Regras de Distribuição)" as rules_db
+participant "API da Concessionária" as dealer_api
+
+crm_rules ->> gateway: **Webhook** com dados do novo lead
+activate gateway
+
+gateway -> ingestion_fn: Encaminha requisição
+activate ingestion_fn
+gateway --> crm_rules: HTTP 200 OK
+deactivate gateway
+
+ingestion_fn -> broker: Publica evento\n`LeadDistribuicaoSolicitada`
+deactivate ingestion_fn
+
+...
+
+routing_svc -> broker: Lê mensagem da fila
+activate routing_svc
+
+routing_svc -> rules_db: Consulta regras de distribuição
+activate rules_db
+rules_db --> routing_svc: Retorna regras
+deactivate rules_db
+
+routing_svc -> routing_svc: Determina concessionária de destino
+
+routing_svc ->> dealer_api: Envia dados do lead
+activate dealer_api
+dealer_api --> routing_svc: Confirma recebimento
+deactivate dealer_api
+
+routing_svc -> broker: Publica evento\n`LeadDistribuidoComSucesso`
+deactivate routing_svc
+
+@enduml

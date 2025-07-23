@@ -1,0 +1,32 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!theme aws-orange
+
+title Component Diagram for Portal Web
+
+Container(portal_web, "Portal Web", "Aplicação Web (SPA/Backend)", "Permite que concessionárias gerenciem leads, oportunidades e tokens de API.")
+
+Boundary(backend, "Backend do Portal Web") {
+  Component(auth_comp, "Componente de Autenticação", "API REST", "Gerencia login, logout e refresh de tokens JWT.")
+  Component(token_mgmt_comp, "Componente de Gestão de Tokens de API", "API REST", "Permite gerar, visualizar e revogar tokens de API para webhooks.")
+  Component(data_view_comp, "Componente de Visualização de Dados", "API REST", "Fornece dados de leads e oportunidades para o dashboard e telas de detalhe.")
+  Component(api_docs_comp, "Componente de Documentação de API", "API REST", "Serve a documentação interativa das APIs de integração.")
+}
+
+System_Ext(crm_ext, "CRM Externo", "Zoho CRM ou similar")
+System_Ext(auth_service, "Serviço de Autenticação", "Serviço de microserviço", "Responsável pela validação de credenciais e emissão de JWTs.")
+System_Ext(db, "Banco de Dados", "PostgreSQL", "Armazena dados de usuários, leads, oportunidades e tokens de API.")
+System_Ext(ingestion_gateway, "Gateway de Ingestão", "Função Serverless", "Recebe webhooks de CRMs e publica eventos.")
+
+Rel(portal_web, auth_service, "Autentica usuários via", "HTTP/S (JWT)")
+Rel(portal_web, db, "Lê e escreve dados de configuração e usuários", "JDBC/ORM")
+
+Rel(auth_comp, auth_service, "Delega autenticação para", "HTTP/S")
+Rel(token_mgmt_comp, db, "Gerencia tokens de API em", "JDBC/ORM")
+Rel(data_view_comp, db, "Consulta dados de leads/oportunidades em", "JDBC/ORM")
+Rel(api_docs_comp, portal_web, "Serve documentação para", "HTTP/S")
+
+Rel(crm_ext, ingestion_gateway, "Envia webhooks para", "HTTP/S")
+Rel(token_mgmt_comp, crm_ext, "Tokens de API configurados em", "Manual/UI")
+
+@enduml
