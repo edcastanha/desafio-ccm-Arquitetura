@@ -41,39 +41,31 @@ Este fluxo descreve como um novo lead capturado no Zoho CRM da montadora é auto
    * Após a confirmação da criação do lead no CRM da concessionária, o Serviço de Roteamento pode, opcionalmente, publicar um novo evento, como `LeadDistribuidoComSucesso`.
    * Este evento pode ser consumido por outros serviços para, por exemplo, atualizar o status do lead no portal web, notificando que ele foi enviado com sucesso.
 
-## 2. Fluxo de Atualização de Oportunidade (Concessionária -> Montadora)
+## 2. Fluxo de Atualização de Oportunidade
 
-Este fluxo descreve como uma mudança no estágio de uma oportunidade no CRM da concessionária é refletida de volta no Zoho CRM da montadora.
+Este fluxo descreve como uma atualização de oportunidade realizada no Zoho CRM dispara um processo assíncrono e orientado a eventos para replicar a mudança em um sistema externo. A arquitetura utiliza webhooks, uma API produtora e um sistema de filas para garantir o desacoplamento e a resiliência.
 
-**Diagrama de Sequência de Alto Nível:**
-*(Nota: O diagrama será adicionado em `/diagramas/fluxo-atualizacao-oportunidade.puml` posteriormente)*
+**Diagrama de Referência:**
+*[`/diagramas/sequencial/fluxo-atualizacao-oportunidade.puml`](./../diagramas/sequencial/fluxo-atualizacao-oportunidade.puml)*
 
-**Passos do Fluxo:**
+![Diagrama de Fluxo de Atualização de Oportunidade](./../diagramas/assets/sequenciais/sequencial_fluxo-atualizacao-oportunidade.png)
 
-1. **Origem (CRM da Concessionária):**
 
-   * Um vendedor atualiza o estágio de uma oportunidade (ex: de "Qualificação" para "Proposta Apresentada").
-   * **Gatilho:** Um Webhook configurado no CRM da concessionária é acionado por este evento.
-2. **Gateway de Ingestão (Função Serverless):**
+**Etapas do Fluxo:**
 
-   * O Webhook da concessionária envia uma requisição HTTP POST para um endpoint de API dedicado (similar ao fluxo de leads).
-   * A função serverless:
-     * **Validação:** Valida a requisição (autenticação via token da concessionária).
-     * **Padronização:** Converte o payload em um evento padronizado `OportunidadeAtualizada`.
-     * **Publicação:** Publica o evento no Broker de Mensagens.
-3. **Broker de Mensagens (RabbitMQ/Kafka):**
+1. **Início no CRM**: O processo começa quando um **Usuário** modifica uma oportunidade diretamente na interface do **Zoho CRM**.
+2. **Gatilho do Motor de Regras**: A ação do usuário aciona o **Motor de Regras** interno do CRM (configurado como uma *Workflow Rule*). Esta regra é configurada para monitorar alterações específicas, como a mudança de estágio de uma oportunidade.
+3. **Disparo do Webhook**: Uma vez que a condição da regra é satisfeita, o CRM dispara um **Webhook**. Trata-se de uma notificação HTTP POST enviada para um endpoint externo, contendo os dados da oportunidade que foi atualizada. Este processo é assíncrono, permitindo que a interface do CRM confirme a ação para o usuário imediatamente, sem aguardar o processamento final.
+4. **Recepção e Enfileiramento**: O webhook é recebido pela **API Producer**. Este é um serviço leve cuja responsabilidade é:
 
-   * O evento é enfileirado de forma segura.
-4. **Serviço de Sincronização de Oportunidades (Consumidor):**
+   * Validar a chamada do webhook (ex: checar tokens de segurança).
+   * Formatar os dados recebidos em uma mensagem padronizada.
+   * Publicar a mensagem na **Fila de Atualização de Oportunidade**.
+5. **Processamento Assíncrono**: O **Serviço Consumidor**, um componente independente que monitora constantemente a fila, detecta e lê a nova mensagem.
+6. **Atualização da Base de Dados**: O Consumidor processa a mensagem, aplica qualquer lógica de negócio necessária e, por fim, atualiza as informações no **Banco de Dados** central do sistema de destino.
 
-   * Um microserviço ou função serverless consumidor assina o tópico `OportunidadeAtualizada`.
-   * Ao receber o evento, o serviço executa a lógica de sincronização:
-     * **Identificação:** Extrai os identificadores do lead/oportunidade e da concessionária.
-     * **Mapeamento de Status:** Traduz o status do CRM da concessionária para o status equivalente no Zoho CRM da montadora (ex: "Proposta Apresentada" -> "Proposal/Price Quote").
-     * **Formatação:** Prepara a requisição para a API do Zoho CRM.
-5. **Destino (Zoho CRM):**
+**Vantagens desta Arquitetura:**
 
-   * O Serviço de Sincronização realiza uma chamada de API para o Zoho CRM, atualizando o estágio da oportunidade correspondente.
-6. **Atualização no Portal:**
-
-   * Similarmente ao outro fluxo, um evento `OportunidadeSincronizadaComSucesso` pode ser publicado para que o portal web reflita o novo status em sua interface.
+* **Desacoplamento**: O Zoho CRM não precisa saber nada sobre a arquitetura do sistema de destino. Sua única responsabilidade é enviar uma notificação para um endereço web.
+* **Resiliência**: Se o Serviço Consumidor ou o banco de dados estiverem temporariamente indisponíveis, as mensagens se acumulam na fila e são processadas assim que o serviço for restaurado, evitando a perda de dados.
+* **Escalabilidade**: Se o volume de atualizações aumentar, é possível adicionar mais instâncias do Serviço Consumidor para processar as mensagens da fila em paralelo.
