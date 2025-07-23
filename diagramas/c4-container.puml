@@ -1,0 +1,46 @@
+@startuml C4_Container
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+TITLE Diagrama de Contêineres do Sistema de Integração
+
+Person(concessionaria, "Usuário da Concessionária", "Vendedor ou Admin.")
+
+System(zoho_crm, "Zoho CRM", "CRM da montadora.")
+System(concessionaria_crm, "CRM da Concessionária", "CRM local da concessionária.")
+
+System_Boundary(c1, "Plataforma de Integração") {
+
+    Container(portal_web, "Portal Web", "Python/Django", "Fornece a UI para concessionárias, gerencia acessos e tokens.")
+    ContainerDb(db, "Banco de Dados Relacional", "PostgreSQL", "Armazena dados do portal: usuários, concessionárias, tokens, etc.")
+
+    Container(api_gateway, "API Gateway", "AWS API Gateway / Nginx", "Recebe chamadas de webhooks e roteia para as funções serverless.")
+    Container(lead_ingestion_fn, "Função de Ingestão de Leads", "AWS Lambda / Serverless", "Processa webhooks do Zoho CRM.")
+    Container(opportunity_ingestion_fn, "Função de Ingestão de Oportunidades", "AWS Lambda / Serverless", "Processa webhooks dos CRMs das concessionárias.")
+
+    Container(message_broker, "Broker de Mensagens", "RabbitMQ / Kafka", "Fila de eventos para processamento assíncrono e desacoplado.")
+
+    Container(lead_routing_service, "Serviço de Roteamento de Leads", "Microserviço/Função Consumidora", "Consome eventos de leads, aplica regras e envia para a concessionária.")
+    Container(opportunity_sync_service, "Serviço de Sincronização de Oportunidades", "Microserviço/Função Consumidora", "Consome eventos de oportunidades e atualiza o Zoho CRM.")
+
+    Rel(concessionaria, portal_web, "Acessa via HTTPS")
+    Rel(portal_web, db, "Lê/Escreve em", "JDBC")
+
+    Rel(api_gateway, lead_ingestion_fn, "Invoca")
+    Rel(api_gateway, opportunity_ingestion_fn, "Invoca")
+
+    Rel(lead_ingestion_fn, message_broker, "Publica evento 'LeadDistribuicaoSolicitada'")
+    Rel(opportunity_ingestion_fn, message_broker, "Publica evento 'OportunidadeAtualizada'")
+
+    Rel(message_broker, lead_routing_service, "Consome eventos de leads")
+    Rel(message_broker, opportunity_sync_service, "Consome eventos de oportunidades")
+
+    Rel(lead_routing_service, db, "Lê regras de roteamento")
+    Rel(lead_routing_service, concessionaria_crm, "Cria Lead via API REST/SOAP")
+
+    Rel(opportunity_sync_service, zoho_crm, "Atualiza Oportunidade via API REST")
+}
+
+Rel(zoho_crm, api_gateway, "Envia Webhook de novo lead")
+Rel(concessionaria_crm, api_gateway, "Envia Webhook de atualização de oportunidade")
+
+@enduml
