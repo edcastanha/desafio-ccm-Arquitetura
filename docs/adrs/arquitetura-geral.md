@@ -1,10 +1,22 @@
 # ADR-001: Escolha da Arquitetura Híbrida (Microserviços + Orientada a Eventos/Serverless)
 
+
+---
+
+***Este Documento de Decisão de Arquitetura (ADR) é uma demonstração prática das minhas habilidades em arquitetura de software e desenvolvimento. Ele apresenta uma proposta de arquitetura híbrida, combinando microserviços com abordagens orientadas a eventos e Serverless, para um cenário hipotético.***
+
+---
+
+
 ## 1. Status
 
-Aceita
+Proposta
+
+
 **Data:** 2025-07-22
 **Responsável:** Edson L Bezerra Filho
+
+---
 
 ## 2. Contexto
 
@@ -12,12 +24,11 @@ O desafio envolve projetar uma arquitetura de integração entre o Zoho CRM de u
 
 * Distribuição automática de leads da montadora para as concessionárias.
 * Atualização automática do estágio da oportunidade do CRM da concessionária para o Zoho CRM da montadora.
-
 * Criação de um portal web que permita às concessionárias visualizar leads/oportunidades, gerenciar acessos e tokens, e consultar a documentação das APIs.
 
-**OBS.:** *Os requisitos da vaga indicam familiaridade com Node.js ou Python, bancos de dados relacionais e NoSQL, integração e hospedagem em nuvem (incluindo serverless), autenticação (OAuth2.0, JWT) e ferramentas de mensageria (RabbitMQ, Kafka).*
-
 Há uma forte preferência por uma arquitetura que ofereça desassociação de nuvem/plataforma e otimização de custos sem comprometer a performance.
+
+---
 
 ## 3. Decisão
 
@@ -39,6 +50,8 @@ A arquitetura geral da solução será Híbrida, combinando Microserviços para 
 * **Processamento de Eventos:** Outros microserviços ou funções serverless consumidores serão responsáveis por consumir as mensagens do broker, aplicar a lógica de negócio específica (transformação de dados, validações complexas, roteamento para concessionárias específicas) e, finalmente, atualizar o sistema de destino (Zoho CRM ou CRM da concessionária).
 * **Implantação:** Funções serverless gerenciadas pelo provedor de nuvem para a ingestão, e microserviços/funções serverless para os consumidores, permitindo escalabilidade automática e pagamento por uso.
 
+---
+
 ## 4. Alternativas Consideradas
 
 ### Arquitetura Baseada Exclusivamente em Microserviços:
@@ -58,6 +71,8 @@ A arquitetura geral da solução será Híbrida, combinando Microserviços para 
 **Prós:** Desacoplamento forte, resiliência natural, escalabilidade horizontal, excelente para fluxos assíncronos.
 
 **Contras:** A complexidade de implementar um portal web interativo e funcional inteiramente baseado em eventos seria excessiva. Rastreamento e depuração podem ser mais complexos sem uma visão síncrona para partes do sistema.
+
+---
 
 ## 5. Justificativa
 
@@ -82,6 +97,8 @@ Para a camada de integração, embora as funções serverless sejam específicas
 ### Resiliência e Escalabilidade:
 
 A natureza assíncrona e o desacoplamento promovidos pela EDA para as integrações aumentam significativamente a resiliência do sistema a falhas temporárias e permitem uma escalabilidade massiva para lidar com grandes volumes de dados.
+
+---
 
 ## 6. Consequências
 

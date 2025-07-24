@@ -1,6 +1,6 @@
 # Documento de Estratégia de Segurança
 
-Este documento descreve as medidas de segurança para a autenticação e autorização no sistema, com foco no Portal Web e na integração de APIs, conforme o [ADR-001](./../adrs/arquitetura-geral.md).
+Este documento descreve as medidas de segurança para a autenticação e autorização no sistema, com foco no Portal Web e na integração de APIs, conforme o [ADR-001](./adrs/arquitetura-geral.md).
 
 ## 1. Autenticação no Portal Web
 

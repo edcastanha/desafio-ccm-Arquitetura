@@ -1,30 +1,33 @@
-# Projeto POC de Arquitetura de Sistema e Solução
+# Bem-vindo à Documentação de Arquitetura CCM
 
-Data Inicial: 22/07/2025 18:17hs
-Autor: Edson Lourenço BEzerra Filho
-Eusebio - CE
-- - - - - - - - - - - - - - - - 
+Esta documentação detalha a arquitetura do sistema de integração de CRMs, cobrindo desde as decisões de alto nível até os fluxos de dados e segurança.
 
-Este projeto foi baseado e orientado por C4 Model e Diagramas de sequencia utilizando PlantUML e utilizando como base de apoio o repo: https://github.com/plantuml-stdlib/C4-PlantUML/blob/master/README.md
+Use a navegação lateral para explorar os diferentes tópicos:
 
+*   **Registros de Decisão de Arquitetura (ADRs):** Entenda as decisões chave e suas justificativas.
+*   **Documentos de Detalhamento:** Aprofunde-se em aspectos específicos como fluxos de dados, funcionalidades e segurança.
+*   **Diagramas C4 Model:** Visualize a arquitetura em diferentes níveis de abstração (Contexto, Contêineres, Componentes).
+*   **Diagramas de Sequência:** Compreenda os fluxos de interação entre os componentes do sistema.
 
-## Detalhamento das Pastas
+## Como Visualizar a Documentação Localmente
 
-**adrs/:** Esta pasta conterá todos os Architecture Decision Records (ADRs). Cada ADR deve ser um arquivo Markdown separado, seguindo o template que vimos, documentando uma decisão arquitetural específica, suas justificativas e consequências. Usar um prefixo numérico (ex: adr-001-) ajuda a manter a ordem.
+Para visualizar esta documentação em seu navegador, siga os passos abaixo:
 
-1. arquitetura-geral.md: Detalha a arquitetura híbrida escolhida, componentes principais, e como eles se interligam.
+1.  **Certifique-se de ter o Java instalado** em sua máquina, pois o PlantUML (utilizado para gerar os diagramas) requer Java.
+2.  **Ative o ambiente virtual** do projeto:
+    ```bash
+    source venv/bin/activate
+    ```
+3.  **Instale as dependências do MkDocs** (se ainda não o fez):
+    ```bash
+    pip install mkdocs mkdocs-material mkdocs-plantuml
+    ```
+4.  **Inicie o servidor de desenvolvimento do MkDocs**:
+    ```bash
+    mkdocs serve
+    ```
+    Isso iniciará um servidor local e fornecerá um link (geralmente `http://127.0.0.1:8000`) que você pode abrir em seu navegador.
 
+## Contribuição
 
-**docs/:** Aqui ficarão os documentos mais descritivos e explicativos da arquitetura, que não são necessariamente decisões pontuais, mas sim o corpo principal da documentação.
-
-**diagramas/:** Armazenará todas as imagens dos diagramas (C4 Model, sequências, etc.). É importante que esses diagramas sejam gerados a partir de ferramentas que permitam a automação ou que sejam facilmente atualizáveis, e que seus arquivos fonte (se aplicável, como PlantUML, Mermaid ou Draw.io) sejam mantidos em uma subpasta, se for o caso, para facilitar atualizações.
-
-**templates/:** Armazenará o(s) template(s) de documento(s) (como o de ADR) para garantir consistência.
-
-**README.md:** Um ponto de partida essencial, descrevendo o propósito do repositório, como navegar na documentação e talvez um resumo da arquitetura de alto nível.
-
-
-
-fluxo-de-dados.md: Descreve os caminhos dos dados entre os sistemas, com referências aos diagramas.
-
-Outros documentos como "Funcionalidades", "Segurança", "Observabilidade", etc., conforme o que deve ser entregue.
+Para contribuir com a documentação, edite os arquivos Markdown (`.md`) e PlantUML (`.puml`) nas pastas `adrs/`, `docs/` e `diagramas/`. As alterações serão refletidas automaticamente ao rodar `mkdocs serve`.

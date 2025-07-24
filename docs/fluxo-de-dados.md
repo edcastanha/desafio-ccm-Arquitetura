@@ -1,15 +1,15 @@
 # Documento de Fluxo de Dados
 
-Este documento detalha os fluxos de dados para as principais integrações do sistema, conforme definido no [ADR-001: Escolha da Arquitetura Híbrida](./../adrs/arquitetura-geral.md). A arquitetura utiliza uma abordagem orientada a eventos para garantir desacoplamento, resiliência e escalabilidade.
+Este documento detalha os fluxos de dados para as principais integrações do sistema, conforme definido no [ADR-001: Escolha da Arquitetura Híbrida](./adrs/arquitetura-geral.md). A arquitetura utiliza uma abordagem orientada a eventos para garantir desacoplamento, resiliência e escalabilidade.
 
 ## 1. Fluxo de Distribuição de Leads (Montadora -> Concessionária)
 
 Este fluxo descreve como um novo lead capturado no Zoho CRM da montadora é automaticamente distribuído para o CRM de uma concessionária.
 
 **Diagrama de Referência:**
-*[`/diagramas/sequencial/fluxo-distribuicao-leads.puml`](./../diagramas/sequencial/fluxo-distribuicao-leads.puml)*
+*[`/diagramas/sequencial/fluxo-distribuicao-leads.puml`](./diagramas/sequencial/fluxo-distribuicao-leads.puml)*
 
-![Diagrama de Fluxo de Distribuição de Leads](./../diagramas/assets/sequenciais/fluxo_distribuicao_leads.png)
+![Diagrama de Fluxo de Distribuição de Leads](./diagramas/assets/sequenciais/fluxo_distribuicao_leads.png)
 
 
 **Passos do Fluxo:**
@@ -49,9 +49,9 @@ Este fluxo descreve como um novo lead capturado no Zoho CRM da montadora é auto
 Este fluxo descreve como uma atualização de oportunidade realizada no Zoho CRM dispara um processo assíncrono e orientado a eventos para replicar a mudança em um sistema externo. A arquitetura utiliza webhooks, uma API produtora e um sistema de filas para garantir o desacoplamento e a resiliência.
 
 **Diagrama de Referência:**
-*[`/diagramas/sequencial/fluxo-atualizacao-oportunidade.puml`](./../diagramas/sequencial/fluxo-atualizacao-oportunidade.puml)*
+*[`/diagramas/sequencial/fluxo-atualizacao-oportunidade.puml`](./diagramas/sequencial/fluxo-atualizacao-oportunidade.puml)*
 
-![Diagrama de Fluxo de Atualização de Oportunidade](./../diagramas/assets/sequenciais/sequencial_fluxo-atualizacao-oportunidade.png)
+![Diagrama de Fluxo de Atualização de Oportunidade](./diagramas/assets/sequenciais/fluxo-atualizacao-oportunidade.png)
 
 
 **Etapas do Fluxo:**
