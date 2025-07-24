@@ -1,12 +1,12 @@
 site_name: Documentação de Arquitetura CCM
 site_url: https://edcastanha.github.io/desafio-ccm-Arquitetura/
 docs_dir: docs
-site_author: Edson Lourenco
+site_author: Edson Lourenço
 site_description: >-
   Repositorio teste de arquitetura para desenvolvimento Python.
 
 # Copyright
-copyright: Copyright &copy; 2025 Edson Lourenco
+copyright: Copyright &copy; 2025 Edson Lourenço
 
 # Configuration
 theme:
@@ -27,7 +27,7 @@ theme:
     # - navigation.expand
     - navigation.footer
     - navigation.indexes
-    # - navigation.instant
+     - navigation.instant
     # - navigation.instant.prefetch
     # - navigation.instant.progress
     # - navigation.prune
