@@ -1,6 +1,6 @@
 # Documento de Funcionalidades do Portal Web
 
-Este documento descreve as funcionalidades planejadas para o portal web, que será utilizado pelas concessionárias. O portal será desenvolvido como um microserviço, conforme o [ADR-001](./../adrs/arquitetura-geral.md).
+Este documento descreve as funcionalidades planejadas para o portal web, que será utilizado pelas concessionárias. O portal será desenvolvido como um microserviço, conforme o [ADR-001](./adrs/arquitetura-geral.md).
 
 ## 1. Autenticação e Gestão de Acessos
 

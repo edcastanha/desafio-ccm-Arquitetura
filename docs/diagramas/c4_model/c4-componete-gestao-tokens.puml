@@ -20,4 +20,5 @@ Rel(TokenController, TokenService, "Usa")
 Rel(TokenService, TokenRepository, "Usa")
 Rel(TokenService, TokenGenerator, "Usa")
 Rel(TokenRepository, db, "Persiste/Consulta", "JDBC/ORM")
+
 @enduml

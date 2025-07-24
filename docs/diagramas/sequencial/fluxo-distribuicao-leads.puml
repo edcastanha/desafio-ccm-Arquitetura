@@ -41,7 +41,8 @@ activate dealer_api
 dealer_api --> routing_svc: Confirma recebimento
 deactivate dealer_api
 
-routing_svc -> broker: Publica evento\n`LeadDistribuidoComSucesso`
+routing_svc -> broker: Publica evento
+`LeadDistribuidoComSucesso`
 deactivate routing_svc
 
 @enduml

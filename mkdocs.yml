@@ -1,0 +1,57 @@
+site_name: Documentação de Arquitetura CCM
+site_url: https://example.com/docs
+docs_dir: docs
+
+plugins:
+  - plantuml-colocator
+  - search
+  
+
+theme:
+  name: material
+  nav_style: dark 
+  language: pt-BR
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.copy
+
+nav:
+  - Início: index.md
+  - Registros de Decisão de Arquitetura (ADRs):
+    - adrs/arquitetura-geral.md
+  - Documentos de Detalhamento:
+    - fluxo-de-dados.md
+    - funcionalidades.md
+    - seguranca.md
+  - Sobre Edson Lourenço:
+    - sobre.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/edcastanha/desafio-ccm-Arquitetura
