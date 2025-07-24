@@ -1,5 +1,5 @@
 site_name: Documentação de Arquitetura CCM
-site_url: https://example.com/docs
+site_url: https://edcastanha.github.io/desafio-ccm-Arquitetura/
 docs_dir: docs
 
 plugins:
@@ -31,7 +31,7 @@ theme:
 
 nav:
   - Início: index.md
-  - Registros de Decisão de Arquitetura (ADRs):
+  - Decisão de Arquitetura (ADR):
     - adrs/arquitetura-geral.md
   - Documentos de Detalhamento:
     - fluxo-de-dados.md
