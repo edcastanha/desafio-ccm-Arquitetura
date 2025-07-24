@@ -20,7 +20,7 @@ Para visualizar esta documentação em seu navegador, siga os passos abaixo:
     ```
 3.  **Instale as dependências do MkDocs** (se ainda não o fez):
     ```bash
-    pip install mkdocs mkdocs-material mkdocs-plantuml
+    pip install -r requirements-docs.txt
     ```
 4.  **Inicie o servidor de desenvolvimento do MkDocs**:
     ```bash

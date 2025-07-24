@@ -39,6 +39,7 @@ nav:
     - seguranca.md
   - Sobre Edson Lourenço:
     - sobre.md
+  - Licença: license.md
 
 markdown_extensions:
   - admonition
