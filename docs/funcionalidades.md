@@ -4,6 +4,12 @@ Este documento descreve as funcionalidades planejadas para o portal web, que ser
 
 ## 1. Autenticação e Gestão de Acessos
 
+Para detalhes sobre a gestão de tokens de API, consulte o diagrama de componentes específico:
+
+*[`Diagrama de Componentes para o Componente de Gestão de Tokens de API (PUML)`](./diagramas/c4_model/c4-componete-gestao-tokens.puml)*
+
+![Diagrama de Componentes para o Componente de Gestão de Tokens de API](./diagramas/assets/c4-model/Componete_Token_API_C4_Model.png)
+
 **F-001: Login de Usuário**
 *   Os usuários das concessionárias poderão fazer login no portal usando um e-mail e senha.
 *   O sistema deve incluir uma funcionalidade de "Esqueci minha senha".

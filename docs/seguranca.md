@@ -26,6 +26,12 @@ Este documento descreve as medidas de segurança para a autenticação e autoriz
 
 ## 3. Autenticação das Integrações (Webhooks)
 
+Para uma visão detalhada do fluxo de autenticação de webhooks, consulte o diagrama abaixo:
+
+*[`Fluxo de Segurança: Autenticação de Webhooks (PUML)`](./diagramas/sequencial/fluxo-seguranca-webhooks.puml)*
+
+![Fluxo de Segurança: Autenticação de Webhooks](./diagramas/assets/sequenciais/fluxo-seguranca-webhooks.png)
+
 **SEC-003: Autenticação de Webhooks com Tokens de API**
 
 *   **Mecanismo:** As chamadas de webhook provenientes dos CRMs (tanto da montadora quanto das concessionárias) devem ser autenticadas para garantir que apenas fontes legítimas possam enviar dados para a plataforma.
