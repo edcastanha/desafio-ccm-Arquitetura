@@ -12,7 +12,7 @@ copyright: Copyright &copy; 2025 Edson Lourenco
 theme:
   name: material
   nav_style: dark
-  locale: pt_BR 
+  language: pt-BR
   features:
     - announce.dismiss
     - content.action.edit
