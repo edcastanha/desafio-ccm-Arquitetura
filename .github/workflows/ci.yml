@@ -3,45 +3,52 @@ name: Deploy MkDocs site to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - main 
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Executa o job em um ambiente Ubuntu
+    permissions: # Adicionado: Permissões necessárias para o build e upload
+      contents: read
+      pages: write
+      id-token: write
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt  
+          pip install -r requirements.txt # Instala dependências do requirements.txt
+          pip install mkdocs mkdocs-material # Garante que MkDocs e material estejam instalados (se não estiverem no requirements.txt)
 
       - name: Build MkDocs site
         run: |
-          mkdocs build
+          mkdocs build # Constrói o site MkDocs. Por padrão, ele cria a pasta 'site'
 
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v5 
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v3 
         with:
-          path: ./site
+          path: './site' # O caminho para a pasta gerada pelo MkDocs (por padrão é 'site')
 
   deploy:
+    # A condição 'if: github.ref == 'refs/heads/main'' pode ser omitida se o push for apenas para 'main'
+    # mas é útil se o workflow for acionado por outras branches no futuro.
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    needs: build
+    needs: build 
 
     permissions:
-      pages: write
-      id-token: write
+      pages: write        
+      id-token: write     
 
     environment:
       name: github-pages
@@ -50,4 +57,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4 
