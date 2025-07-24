@@ -1,33 +1,50 @@
 site_name: Documentação de Arquitetura CCM
 site_url: https://edcastanha.github.io/desafio-ccm-Arquitetura/
 docs_dir: docs
+site_author: Edson Lourenco
+site_description: >-
+  Repositorio teste de arquitetura para desenvolvimento Python.
 
-plugins:
-  - plantuml-colocator
-  - search
-  
+# Copyright
+copyright: Copyright &copy; 2025 Edson Lourenco
 
+# Configuration
 theme:
   name: material
-  nav_style: dark 
-  language: pt-BR
-  palette:
-    - scheme: default
-      toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
-    - scheme: slate
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to light mode
+  nav_style: dark
+  locale: pt_BR 
   features:
-    - navigation.tabs
-    - navigation.sections
-    - toc.integrate
-    - search.suggest
-    - search.highlight
-    - content.tabs.link
+    - announce.dismiss
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
     - content.code.copy
+    # - content.code.select
+    # - content.footnote.tooltips
+    # - content.tabs.link
+    - content.tooltips
+    # - header.autohide
+    # - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    # - navigation.instant
+    # - navigation.instant.prefetch
+    # - navigation.instant.progress
+    # - navigation.prune
+    - navigation.sections
+    - navigation.tabs
+    # - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    # - toc.integrate
+
+plugins:
+  - search
+
 
 nav:
   - Início: index.md
@@ -40,17 +57,6 @@ nav:
   - Sobre Edson Lourenço:
     - sobre.md
   - Licença: license.md
-
-markdown_extensions:
-  - admonition
-  - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.tabbed:
-      alternate_style: true
-  - attr_list
-  - md_in_html
 
 extra:
   social:

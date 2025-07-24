@@ -1,4 +1,4 @@
-# Edson Lourenco
+# Edson Lourenço
 
 Profissional de tecnologia da informação desde 2005 , com experiência em levantamento de requisitos, desenvolvimento de software e arquitetura de soluções. Ele é formado em Análise e Desenvolvimento de Sistemas pela UNIESP.
 
