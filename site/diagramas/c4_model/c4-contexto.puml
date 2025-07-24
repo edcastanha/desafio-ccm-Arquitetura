@@ -1,0 +1,29 @@
+@startuml C4_Contexto
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!theme aws-orange
+
+TITLE Diagrama de Contexto do Sistema de Integração de CRMs - CCM
+
+Person(concessionaria, "Usuário da Concessionária", "Vendedor ou Admin que utiliza o portal e o CRM local.")
+Person(montadora, "Admin da Montadora", "Administrador que gerencia o processo no Zoho CRM.")
+
+System(zoho_crm, "Zoho CRM", "CRM principal da montadora, fonte dos leads.")
+System(concessionaria_crm, "CRM da Concessionária", "CRM utilizado pela concessionária (diversos fornecedores).")
+
+System_Boundary(c1, "Sistema de Integração CCM") {
+    System(integration_system, "Plataforma de Integração", "Orquestra a distribuição de leads e a sincronização de oportunidades.")
+}
+
+Rel(montadora, zoho_crm, "Gerencia Leads")
+Rel(concessionaria, concessionaria_crm, "Gerencia Oportunidades")
+
+Rel(zoho_crm, integration_system, "Envia novos leads via Webhook")
+
+' **SOLUÇÃO PROPOSTA AQUI:** Usando Rel_R para forçar a linha para a direita e potencialmente separar as labels
+Rel_R(concessionaria_crm, integration_system, "Envia atualizações de oportunidades via Webhook")
+Rel_L(integration_system, concessionaria_crm, "Cria leads via API")
+
+Rel(integration_system, zoho_crm, "Atualiza status da oportunidade via API")
+Rel(concessionaria, integration_system, "Usa o Portal Web para visualizar dados e gerenciar tokens")
+
+@enduml

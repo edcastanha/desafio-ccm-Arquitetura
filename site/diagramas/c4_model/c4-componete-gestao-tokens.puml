@@ -1,0 +1,24 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!theme aws-orange
+
+Title Diagrama de Componentes para o Componente de Gestão de Tokens de API
+
+' Define o componente principal que contém as partes internas
+Component(token_mgmt_comp, "Componente de Gestão de Tokens de API", "API REST", "Permite gerar, visualizar e revogar tokens de API para webhooks.") {
+    ' As "classes" são representadas como Componentes menores
+    Component(TokenController, "TokenController", "Controlador REST", "Gerencia as requisições HTTP para tokens de API.")
+    Component(TokenService, "TokenService", "Serviço de Negócio", "Contém a lógica de negócio para criação, validação e revogação de tokens.")
+    Component(TokenRepository, "TokenRepository", "Repositório de Dados", "Responsável pela persistência e recuperação de tokens no banco de dados.")
+    Component(TokenGenerator, "TokenGenerator", "Utilitário", "Gera tokens únicos e seguros.")
+}
+
+System_Ext(db, "Banco de Dados", "PostgreSQL", "Armazena os tokens de API.")
+
+' Relações entre os novos componentes internos e o externo
+Rel(TokenController, TokenService, "Usa")
+Rel(TokenService, TokenRepository, "Usa")
+Rel(TokenService, TokenGenerator, "Usa")
+Rel(TokenRepository, db, "Persiste/Consulta", "JDBC/ORM")
+
+@enduml
